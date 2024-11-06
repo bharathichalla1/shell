@@ -9,7 +9,8 @@ VALIDATE(){
        exit 1
   else
        echo "$2..success"
-    }
+    fi   
+}
 
 # here $1 is exit status, $2 is installing mysql
 
