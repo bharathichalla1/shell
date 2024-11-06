@@ -8,7 +8,9 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-LOG_FILE="/tmp/$0-$TIMESTAMP.log" #$0 means script name 
+LOGFILE="/tmp/$0-$TIMESTAMP.log" #$0 means script name 
+
+echo "script starting executing at $TIMESTAMP" &>> $LOGFILE
 
 
 VALIDATE(){
@@ -32,10 +34,10 @@ else
 fi   
 
 
-yum install mysql -y &>>$LOG_FILE
+yum install mysql -y &>> $LOGFILE
 
 VALIDATE $? "installing mysql"
 
-yum install git -y &>>$LOG_FILE
+yum install git -y &>> $LOGFILE
 
 VALIDATE $? "installing git"
