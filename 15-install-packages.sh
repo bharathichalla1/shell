@@ -6,6 +6,20 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+TIMESTAMP=$(date +F-%H-%M-%S)
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
+
+echo "script starting executing at $TIMESTAMP" &>> $LOGFILE
+
+
+VALIDATE(){
+    if [ $1 -ne 0 ]
+    then
+         echo -e "$2 ...$R FAILED $N"
+    else
+         echo -e "$2 ...$G SUCCESS $N"
+    fi     
+}
 
 if [ $ID -ne 0 ]
 then
@@ -15,4 +29,17 @@ else
   echo "you are root user"
 fi   
 
-echo "all arguments passws : $@"
+#echo "all arguments passws : $@"
+#git mysql postfix
+
+for package in $@
+do
+    yum list linstalled $package &>> $LOGFILE #check installed or not
+    if [ $? -ne 0 ] #if not installed
+    then
+       yum install $package -y &>> $LOGFILE # install the package
+       VALIDATE $? "installation of $package" #validate
+    else
+        echo -e "$package is already installed...$Y SKIPPING $N"
+    fi     
+done 
