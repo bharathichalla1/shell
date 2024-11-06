@@ -2,15 +2,14 @@
 
 ID=$(id -u)
 
-VALIDATE()
-{
+VALIDATE(){
     if [ $1 -ne 0 ]
   then 
        echo "ERROR : $2..failed"
        exit 1
   else
        echo "$2..success"
-}
+    }
 
 # here $1 is exit status, $2 is installing mysql
 
