@@ -2,8 +2,7 @@
 
 AMI=ami-0b4f379183e5706b9
 SG_ID=sg-047ba035b5558d59f
-INSTANCES=( "mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" 
-"payment" "dispatch" "web" )
+INSTANCES=( "mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web" )
 
 for i in "${INSTANCES[@]}"
 do
@@ -16,10 +15,9 @@ do
     fi    
 
 
-    IP_ADDRESS=$(aws ec2 run-instances --image-id ami-0b4f379183e5706b9 --instance-type 
-    $INSTANCE_TYPE --security-group-ids sg-047ba035b5558d59f  --tag-specifications
-    "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" --query 'instances[0].
-    PrivateIpAddress' --output text)
-    echo "instance is :$i"
+    IP_ADDRESS=$(aws ec2 run-instances --image-id ami-0b4f379183e5706b9 --instance-type $INSTANCE_TYPE --security-group-ids sg-047ba035b5558d59f  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" --query 'instances[0].PrivateIpAddress' --output text)
+    
+    echo "instance is  : $i"
+
 done
 
